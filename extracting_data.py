@@ -1,39 +1,52 @@
 import pdfplumber
 
-##divide the content based on the headers
 def divide_content_by_header(content):
     lines = content.split('\n')  # Split the content into lines
 
-    documents = []
-    current_document = []
+    documents = {}
+    current_header = None
 
     for line in lines:
         if line.strip():  # Skip empty lines
-            current_document.append(line)
-            if len(current_document) == 1:  # Check if it's the first line of a document
-                if current_document != [line]:  # Check if it's not the first document
-                    documents.append('\n'.join(current_document[:-1]))  # Add previous document
-                    current_document = [line]  # Start new document with the current line
-
-    if current_document:
-        documents.append('\n'.join(current_document))
+            if current_header is None:  # Set the current header
+                current_header = line
+                documents[current_header] = ''
+            elif line == current_header:  # Found a new header
+                current_header = line
+                documents[current_header] = ''
+            else:
+                documents[current_header] += line + '\n'  # Add line to the current header
 
     return documents
 
-##extract pdf doc data
-with open('C:/Users/rita/Downloads/CoC_LegislativeGuide.pdf', 'rb') as file:    
-    # pdfplumber
-    pdf = pdfplumber.open(file)
-    text = ''
-    tables = []
-    for page in pdf.pages:
-        text += page.extract_text()
-        page_tables = page.extract_tables()
-        tables.extend(page_tables)
-    pdf.close()
+# Extract PDF document data
+file_path = 'path'
 
-documents = divide_content_by_header(text)
+documents = []
+with pdfplumber.open(file_path) as pdf:
+    for i, page in enumerate(pdf.pages, 1):
+        text = page.extract_text()
+        documents.append((i, text.strip()))
 
-# Print the divided documents
-for i, doc in enumerate(documents, 1):
-    print(f"Document {i}:\n{doc.strip()}\n")
+# Sort the documents based on page number
+documents.sort(key=lambda x: x[0])
+
+# Divide content by headers for each page
+divided_documents = []
+for i, content in documents:
+    divided = divide_content_by_header(content)
+    divided_documents.append((i, divided))
+
+# Regroup documents with the same header
+grouped_documents = {}
+for i, doc in divided_documents:
+    for header, content in doc.items():
+        if header not in grouped_documents:
+            grouped_documents[header] = []
+        grouped_documents[header].append((i, content))
+
+# Print the grouped documents
+for header, docs in grouped_documents.items():
+    print(f"Header: {header}\n")
+    for i, doc_content in docs:
+        print(f"Document {i}:\n{doc_content.strip()}\n")
