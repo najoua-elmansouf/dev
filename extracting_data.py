@@ -32,3 +32,8 @@ with open('C:/Users/rita/Downloads/CoC_LegislativeGuide.pdf', 'rb') as file:
         tables.extend(page_tables)
     pdf.close()
 
+documents = divide_content_by_header(text)
+
+# Print the divided documents
+for i, doc in enumerate(documents, 1):
+    print(f"Document {i}:\n{doc.strip()}\n")
