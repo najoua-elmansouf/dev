@@ -46,11 +46,11 @@ for i, doc in divided_documents:
             grouped_documents[header] = []
         grouped_documents[header].append((i, content))
 
-"""# Print the grouped documents
+# Print the grouped documents
 for header, docs in grouped_documents.items():
     print(f"Header: {header}\n")
     for i, doc_content in docs:
-        print(f"Document {i}:\n{doc_content.strip()}\n")"""
+        print(f"Document {i}:\n{doc_content.strip()}\n")
 
 ##Calculer les tokens
 import tiktoken
@@ -98,5 +98,5 @@ for header, docs in grouped_documents.items():
 df = pd.concat([df, pd.DataFrame(data)], ignore_index=True)
 
 # Write to CSV
-df.to_csv('', index=False)
+##df.to_csv('', index=False)
 
