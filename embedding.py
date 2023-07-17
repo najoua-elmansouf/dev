@@ -121,7 +121,7 @@ def answer_with_gpt_4(
 
     return '\n' + response['choices'][0]['message']['content'], section_lenght
 
-prompt = "peux tu me donner des recommendations pour Ingénierie et MOD dans le document"
+prompt = "donne moi le resultat net du métier amenagement"
 response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
 print(response)
 
