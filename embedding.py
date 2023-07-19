@@ -10,7 +10,7 @@ ENCODING = "gpt2"
 encoding = tiktoken.get_encoding(ENCODING)
 separator_len = len(encoding.encode(SEPARATOR))
 
-df  = pd.read_csv('')
+df  = pd.read_csv('C:/Users/rita/Downloads/cdg.csv')
 #print(df.head())
 #df = df.set_index(["Header"])
 """print(f"{len(df)} rows in the data.")
@@ -18,7 +18,7 @@ print(df.head(1).to_markdown())"""
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
 COMPLETIONS_MODEL = "gpt-3.5-turbo"
-openai.api_key = ''
+openai.api_key = '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'
 
 
 def get_embedding(text: str, model: str=EMBEDDING_MODEL) -> list[float]:
