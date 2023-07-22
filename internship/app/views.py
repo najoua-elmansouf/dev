@@ -42,7 +42,7 @@ def process_uploaded_datasets(file):
     processed_outputs = []
     df = pd.read_excel(file)
     sample_dataset = df.to_csv(index=False)
-    response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
+    response = gpt_processing('gpt-3.5-turbo-16k', '', sample_dataset)
     response_dict = json.loads(response['choices'][0]['message']['content'])
     processed_outputs.append(response_dict)  
     return processed_outputs
