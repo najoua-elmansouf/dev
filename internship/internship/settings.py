@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'channels',
     'channels_redis',
-    
+    'chatbot',
 ]
 
 MIDDLEWARE = [
@@ -83,9 +83,9 @@ WSGI_APPLICATION = "internship.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "intern",
+        "NAME": "chat_cdg",
         "USER": "postgres",
-        "PASSWORD": "GHITAHATIMI",
+        "PASSWORD": "p@ssw@rd",
         "HOST": "localhost",
     }
 }
@@ -161,7 +161,9 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'internship/static')
 ]
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
