@@ -43,11 +43,12 @@ INSTALLED_APPS = [
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'channels',
     'channels_redis',
+    'app1',
     
 ]
 
+
 MIDDLEWARE = [
-    
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -84,9 +85,9 @@ WSGI_APPLICATION = "internship.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "intern",
+        "NAME": "ghitana",
         "USER": "postgres",
-        "PASSWORD": "GHITAHATIMI",
+        "PASSWORD": "najoua",
         "HOST": "localhost",
     }
 }
@@ -126,6 +127,7 @@ USE_I18N = True
 USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 ASGI_APPLICATION = 'internship.routing.application'
 CHANNEL_LAYERS = {
     'default':{

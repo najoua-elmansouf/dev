@@ -125,7 +125,7 @@ document.getElementById('upload-dataset').addEventListener('change', function (e
     const maxFilesAllowed = parseInt(event.target.getAttribute('data-max-files'));
 
     if (files.length > maxFilesAllowed) {
-        alert(`You can upload a maximum of ${maxFilesAllowed} datasets.`);
+        alert('You can upload a maximum of ${maxFilesAllowed} datasets.');
         // Clear the selected files to prevent uploading more than the limit
         this.value = null;
         return;
@@ -159,4 +159,4 @@ document.getElementById('upload-dataset').addEventListener('change', function (e
 });
 
 
-    </script>
+</script>
