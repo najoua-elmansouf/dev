@@ -40,7 +40,7 @@ app.layout = html.Div([
 ])
 
 # Your Django view URL
-url = 'http://localhost:8000/upload_datasets/'
+url = 'http://localhost:8000/dash/upload_datasets/'
 
 def fetch_json_data(url, files):
     # Make the POST request with the files
