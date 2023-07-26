@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-$91!a#8x-e$9=ubexh(6#%_w6h%2mhl1brs3ndcfyks^m&0fq2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost']
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Application definition
@@ -124,7 +125,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-CRISPY_TEMPLATE_PACK = 'bootstap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 ASGI_APPLICATION = 'internship.routing.application'
 CHANNEL_LAYERS = {
     'default':{
