@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from app1 import views
 
 urlpatterns = [
-    path("", include('app.urls')),
+    path("dash/", include('app.urls')),
     path("admin/", admin.site.urls),
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
+    path('', include('app1.urls')),
 ]
