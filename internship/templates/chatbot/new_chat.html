@@ -100,61 +100,59 @@
 
 
     <!-- Your JavaScript code here -->
+<script>
+    var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;</script>
 
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
-    <script>
-        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        function addMessage(role, content) {
-            var messageDiv = $("<div></div>").addClass("list-group-item");
-            messageDiv.addClass(role === 'user' ? 'user-message' : 'bot-message');
-            messageDiv.text(content);
-            $("#chat-window").append(messageDiv);
+<script>
+    // ... Existing code ...
+    $("#upload-button").click(function () {
+        var fileInput = $("#file-input")[0];
+        var file = fileInput.files[0];
+        var formData = new FormData();
+        formData.append("file", file);
+
+        // AJAX CALL TO SERVER FOR FILE UPLOAD WITH CSRF TOKEN USING Fetch API
+        fetch("{% url 'pdf_recieve' %}", {  // Replace 'pdf_recieve' with the actual URL for your Django view.
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken
+            },
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response from server:", data);
+                var response = data.response;
+
+                // Add the chatbot's response to the chat window
+                addMessage('bot', response);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    });
+
+    function addMessage(role, content) {
+        var chatWindow = $("#chat-window");
+        var messageDiv = $("<div></div>").addClass("list-group-item").addClass("list-group-item-action");
+        var messageContent = $("<p></p>").text(content);
+
+        if (role === 'bot') {
+            messageDiv.addClass("list-group-item-secondary");
+        } else if (role === 'user') {
+            messageDiv.addClass("list-group-item-primary");
         }
 
-        $("#gpt-button").click(function () {
-            var question = $("#chat-input").val();
-            console.log("User query:", question); // Debugging statement to check the user query
-            addMessage('user', question);
+        messageDiv.append(messageContent);
+        chatWindow.append(messageDiv);
 
-            // AJAX CALL TO SERVER WITH CSRF TOKEN
-            $.ajax({
-                type: "POST",
-                url: "{% url 'chat_view' %}",
-                data: { 'user_query': question },
-                headers: { "X-CSRFToken": csrftoken }, // Include the CSRF token in the request headers
-                success: function (data) {
-                    console.log("Response from server:", data); // Debugging statement to check the server response
-                    var response = data.response;
-                    addMessage('bot', response);
-                }
-            });
-            $("#chat-input").val('');
-        });
-
-        $("#upload-button").click(function () {
-            var fileInput = $("#file-input")[0];
-            var file = fileInput.files[0];
-            var formData = new FormData();
-            formData.append("file", file);
-
-            // AJAX CALL TO SERVER FOR FILE UPLOAD WITH CSRF TOKEN
-            $.ajax({
-                type: "POST",
-                url: "{% url 'chat_view' %}",
-                data: formData,
-                processData: false,
-                contentType: false,
-                headers: { "X-CSRFToken": csrftoken }, // Include the CSRF token in the request headers
-                success: function (data) {
-                    console.log("Response from server:", data); // Debugging statement to check the server response
-                    var response = data.response;
-                    addMessage('bot', response);
-                }
-            });
-        })
-    </script>
+        // Scroll to the bottom of the chat window to show the latest messages
+        chatWindow.scrollTop(chatWindow[0].scrollHeight);
+    }
+</script>
 
 
 </body>

@@ -8,51 +8,52 @@ from .extracting_data import *
 
 @csrf_protect
 def chat_view(request):
-    try:
-        if request.method == 'POST':
-            # Get the uploaded file from the request
-            uploaded_file = request.FILES.get('file')
+    return render(request, 'chatbot/new_chat.html')
 
-            if uploaded_file is not None:
-                # Save the uploaded file to the "uploads" directory
-                file_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
-                with open(file_path, 'wb') as destination:
-                    for chunk in uploaded_file.chunks():
-                        destination.write(chunk)
 
-                # Extract data from the uploaded PDF file
-                grouped_documents = process_pdf(file_path)
+import os
 
-                # Compute document embeddings
-                document_embeddings = compute_doc_embeddings(grouped_documents)
+# ...
 
-                # Get user input from the frontend
-                user_query = request.POST.get('user_query')
+def pdf_recieve(request):
+    if request.method == 'POST' and request.FILES.get('file'):
+        uploaded_file = request.FILES['file']
+        print("File name:", uploaded_file.name)
+        print("File size:", uploaded_file.size)
 
-                # Interact with ChatGPT and get the response
-                response, _ = answer_with_gpt_4(user_query, grouped_documents, document_embeddings)
-                
-                print("Server Response:", response)
-                
-                # Prepare the response to be displayed in the chat window
-                chat_messages = [
-                    {'role': 'system', 'content': 'You are now chatting with the ChatGPT bot.'},
-                    {'role': 'user', 'content': user_query},
-                    {'role': 'bot', 'content': response},
-                ]
+        # Set the path to the "uploads" folder in the "dev" directory
+        uploads_folder = os.path.join(settings.BASE_DIR, 'dev', 'uploads')
 
-                # Pass the chat messages and other data to the template for rendering
-                context = {
-                    'chat_messages': chat_messages,
-                    'file_path': file_path,
-                }
+        # Create the "uploads" folder if it doesn't exist
+        if not os.path.exists(uploads_folder):
+            os.makedirs(uploads_folder)
 
-                # Render the chatbot page with the chat messages and other data
-                return render(request, 'chatbot/new_chat.html', context)
+        # Save the uploaded file in the "uploads" folder
+        file_path = os.path.join(uploads_folder, uploaded_file.name)
+        with open(file_path, 'wb') as destination:
+            for chunk in uploaded_file.chunks():
+                destination.write(chunk)
 
-        # If the request is not a POST or no file was uploaded, render the chatbot page
-        return render(request, 'chatbot/new_chat.html')
+        # Process the uploaded PDF file
+        df = process_pdf(file_path)
+        print(df)
 
-    except Exception as e:
-        # Return a JSON response with the error message
-        return JsonResponse({'error': str(e)}, status=500)
+        # Compute document embeddings
+        document_embeddings = compute_doc_embeddings(df, EMBEDDING_MODEL)
+
+        # Your user's query (example: "What is GDPR?")
+        user_query = "Your user's question goes here."
+
+        # Get the chatbot's response based on the user's query and document content
+        response, _ = answer_with_gpt_4(user_query, df, document_embeddings)
+
+        # Remove the uploaded file (optional, if needed)
+        # os.remove(file_path)
+
+        # Return the chatbot's response as a JSON
+        return JsonResponse({'response': response})
+
+    else:
+        print("pewpewpewww")
+        # Handle the case when there is no file uploaded
+        return JsonResponse({'error': 'No file uploaded'})
