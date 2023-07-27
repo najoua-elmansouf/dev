@@ -4,12 +4,15 @@ import pandas as pd
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
+@login_required(login_url='login')
 def myview(request):
     return render(request, "app/graph.html")
 
-
+@login_required(login_url='login')
 def gpt_processing(model,key,sample_dataset): 
     """process data of files by gpt"""
     # key for each user
@@ -96,7 +99,7 @@ def gpt_processing(model,key,sample_dataset):
     )
     return response 
 
-
+@login_required(login_url='login')
 def process_uploaded_datasets(file):
     processed_outputs = []
     try:
@@ -114,6 +117,7 @@ def process_uploaded_datasets(file):
 
 
 @csrf_exempt
+@login_required(login_url='login')
 def upload_datasets(request):
     if request.method == 'POST':
         # Handle the uploaded datasets and process them using GPT-3.5 Turbo or other logic
