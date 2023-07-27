@@ -106,7 +106,7 @@ def process_uploaded_datasets(file):
         # Assuming you are using an Excel file, specify the engine as 'openpyxl'
         df = pd.read_excel(file, engine='openpyxl')
         sample_dataset = df.to_string(index=False)  # Convert DataFrame to string directly
-        response = gpt_processing('gpt-3.5-turbo-16k', '', sample_dataset)
+        response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
         response_dict = response['choices'][0]['message']['content']
         processed_outputs.append(response_dict)
     except Exception as e:
