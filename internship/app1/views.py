@@ -2,16 +2,12 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 @login_required(login_url='login')
 def HomePage(request):
     return redirect (request, 'login')
 
-
-def is_superuser(user):
-    return user.is_superuser
 
 
 def AccueilPage(request):
@@ -40,7 +36,6 @@ def SignupPage(request):
 
     return render (request, 'signup.html')
 
-@user_passes_test(is_superuser)
 def LoginPage(request):
     if request.method=='POST':
         username=request.POST.get('username')

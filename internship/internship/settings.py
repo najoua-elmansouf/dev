@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'channels',
     'channels_redis',
     'app1',
-    
 ]
 
 
