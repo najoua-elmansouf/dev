@@ -2,11 +2,24 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 @login_required(login_url='login')
 def HomePage(request):
-    return redirect (request, 'graph')
+    return redirect (request, 'login')
+
+
+def is_superuser(user):
+    return user.is_superuser
+
+
+def AccueilPage(request):
+    return render(request, 'accueil.html')
+
+@login_required(login_url='login')
+def FassilPage(request):
+    return render(request, 'fassil.html')
 
 def SignupPage(request):
     if request.method=='POST':
@@ -27,6 +40,7 @@ def SignupPage(request):
 
     return render (request, 'signup.html')
 
+@user_passes_test(is_superuser)
 def LoginPage(request):
     if request.method=='POST':
         username=request.POST.get('username')
@@ -34,7 +48,7 @@ def LoginPage(request):
         user=authenticate(request,username=username,password=pass1)
         if user is not None:
             login(request,user)
-            return redirect('graph')
+            return redirect('fassil')
         else:
             return HttpResponse("username or password is incorrecte!")
     return render (request,'login.html')
