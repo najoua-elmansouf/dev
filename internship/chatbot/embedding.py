@@ -12,7 +12,7 @@ EMBEDDING_MODEL = "text-embedding-ada-002"
 
 # Read the OpenAI API key from an environment variable
 
-openai.api_key = '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'
+openai.api_key = 'key'
 
 encoding = tiktoken.get_encoding(ENCODING)
 separator_len = len(encoding.encode(SEPARATOR))
