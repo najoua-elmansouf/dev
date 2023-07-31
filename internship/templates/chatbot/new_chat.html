@@ -64,35 +64,102 @@
             </div>
             <!-- chatbot_template.html -->
 
-            <div class="container mt-4">
+<!-- ask_question.html -->
+<!-- ask_question.html -->
+
+<h2>Ask Questions and Upload/Change a File</h2>
+
+<h3>Uploaded File: {{ file.file.name }}</h3>
+
+<!-- Display the file content here if needed -->
+<!-- You can use {{ file.file.url }} to show a link to download the file -->
+
+<!-- File Upload Form -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="file-input">
-                            <div class="input-group-append">
-                                <button id="upload-button" class="btn btn-primary">Upload File</button>
-                            </div>
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="chat-input"
-                                placeholder="Type your query here...">
-                            <div class="input-group-append">
-                                <button id="gpt-button" class="btn btn-primary">Ask ChatGPT</button>
-                            </div>
-                        </div>
-
-                        <div id="chat-window" class="list-group">
-                            <!-- Chat messages will be displayed here -->
-                        </div>
+                <div class="input-group mb-3">
+                    <input type="file" class="form-control" id="file-input" name="file">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" id="upload-button">Upload File</button>
                     </div>
                 </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Question-Asking Form -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="chat-input" placeholder="Type your query here..."
+                        name="question_text">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary" id="gpt-button">Ask</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if response %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-success" role="alert" id="response-container">
+                {{ response }}
             </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if questions %}
+<h3>Existing Questions:</h3>
+<ul>
+    {% for question in questions %}
+    <li>{{ question.question_text }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
         </main>
     </main>
     <!-- Your HTML code here -->
+<script>
+    var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
+    // Use jQuery to handle the form submission and display the response
+    $(document).ready(function () {
+        $("#gpt-button").click(function (event) {
+            event.preventDefault();
+            var query = $("#chat-input").val();
+            $.ajax({
+                url: window.location.href,
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': csrftoken,
+                    'question_text': query,
+                },
+                success: function (data) {
+                    // Update the response container with the chatbot's response
+                    $("#response-container").text(data.response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
 
     <!-- Your HTML code here -->
 
@@ -100,59 +167,13 @@
 
 
     <!-- Your JavaScript code here -->
-<script>
-    var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;</script>
+    <script>
+        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;</script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-
-<script>
-    // ... Existing code ...
-    $("#upload-button").click(function () {
-        var fileInput = $("#file-input")[0];
-        var file = fileInput.files[0];
-        var formData = new FormData();
-        formData.append("file", file);
-
-        // AJAX CALL TO SERVER FOR FILE UPLOAD WITH CSRF TOKEN USING Fetch API
-        fetch("{% url 'pdf_recieve' %}", {  // Replace 'pdf_recieve' with the actual URL for your Django view.
-            method: "POST",
-            headers: {
-                "X-CSRFToken": csrftoken
-            },
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Response from server:", data);
-                var response = data.response;
-
-                // Add the chatbot's response to the chat window
-                addMessage('bot', response);
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    });
-
-    function addMessage(role, content) {
-        var chatWindow = $("#chat-window");
-        var messageDiv = $("<div></div>").addClass("list-group-item").addClass("list-group-item-action");
-        var messageContent = $("<p></p>").text(content);
-
-        if (role === 'bot') {
-            messageDiv.addClass("list-group-item-secondary");
-        } else if (role === 'user') {
-            messageDiv.addClass("list-group-item-primary");
-        }
-
-        messageDiv.append(messageContent);
-        chatWindow.append(messageDiv);
-
-        // Scroll to the bottom of the chat window to show the latest messages
-        chatWindow.scrollTop(chatWindow[0].scrollHeight);
-    }
-</script>
+    
 
 
 </body>
