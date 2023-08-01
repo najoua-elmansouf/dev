@@ -66,7 +66,6 @@
 
 <!-- ask_question.html -->
 <!-- ask_question.html -->
-
 <h2>Ask Questions and Upload/Change a File</h2>
 
 <h3>Uploaded File: {{ file.file.name }}</h3>
@@ -92,18 +91,16 @@
 </div>
 
 <hr>
-
-<!-- Question-Asking Form -->
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-6">
-            <form method="post">
+            <form id="question-form">
                 {% csrf_token %}
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="chat-input" placeholder="Type your query here..."
                         name="question_text">
                     <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary" id="gpt-button">Ask</button>
+                        <button type="submit" class="btn btn-primary" id="ask-button">Ask</button>
                     </div>
                 </div>
             </form>
@@ -111,17 +108,12 @@
     </div>
 </div>
 
-{% if response %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="alert alert-success" role="alert" id="response-container">
-                {{ response }}
-            </div>
-        </div>
-    </div>
+<!-- Container to display chatbot responses -->
+<div class="container mt-4" id="chatbot-response-container">
+    <!-- Chatbot responses will be dynamically added here -->
 </div>
-{% endif %}
+<!-- ... -->
+
 {% if questions %}
 <h3>Existing Questions:</h3>
 <ul>
@@ -129,17 +121,46 @@
     <li>{{ question.question_text }}</li>
     {% endfor %}
 </ul>
-{% endif %}
+{% endif %}</main>
+</main>
+<!-- Your HTML code here -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
-        </main>
-    </main>
-    <!-- Your HTML code here -->
+<style>
+    /* CSS styles for the chatbot responses */
+    #chatbot-response-container {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .chat-message {
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+    }
+
+    .user-message {
+        background-color: #cce6ff;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
 <script>
     var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // Use jQuery to handle the form submission and display the response
     $(document).ready(function () {
-        $("#gpt-button").click(function (event) {
+        console.log("Document is ready and jQuery is loaded.");
+
+        $("#question-form").submit(function (event) {
             event.preventDefault();
             var query = $("#chat-input").val();
             $.ajax({
@@ -150,30 +171,26 @@
                     'question_text': query,
                 },
                 success: function (data) {
-                    // Update the response container with the chatbot's response
-                    $("#response-container").text(data.response);
+                    console.log("Chatbot response:", data.response);
+
+                    // Create a new div for the chat message
+                    var chatMessageDiv = $("<div></div>").addClass("chat-message");
+                    var chatMessageText = $("<p></p>").text(data.response);
+
+                    // Append the chat message to the container
+                    chatMessageDiv.append(chatMessageText);
+                    $("#chatbot-response-container").append(chatMessageDiv);
+
+                    // Clear the input field for the next question
+                    $("#chat-input").val('');
                 },
                 error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
+                    console.error("AJAX error:", xhr.responseText);
                 }
             });
         });
     });
 </script>
-
-    <!-- Your HTML code here -->
-
-    <!-- Add the CSRF token to the page as a JavaScript variable -->
-
-
-    <!-- Your JavaScript code here -->
-    <script>
-        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;</script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-
-    
 
 
 </body>
