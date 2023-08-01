@@ -85,9 +85,9 @@ WSGI_APPLICATION = "internship.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "ghitana",
+        "NAME": "postgres",
         "USER": "postgres",
-        "PASSWORD": "najoua",
+        "PASSWORD": "GHITAHATIMI",
         "HOST": "localhost",
     }
 }
