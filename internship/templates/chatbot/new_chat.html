@@ -15,184 +15,138 @@
 </head>
 
 <body>
+    <center>
 
-    <header>
-        <!-- Fixed navbar -->
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Skolo Online Chat GPT DEMO</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <!-- Begin page content -->
+        <div class="container mt-4">
+            <h2 style="color: #ad4f09;">Ask Questions and Upload/Change a File</h2>
 
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+            <h3>Uploaded File: {{ file.file.name }}</h3>
 
-    <!-- Begin page content -->
-    <main class="flex-shrink-0">
-        <main class="container">
-            <br>
-            <br>
-            <h1 class="mt-5">Get Started with ChatGPT API from OpenAI</h1>
-            <p class="lead">
-                This project is created for educational purposes and demonstrates the use of ChatGPT API from OpenAI. To
-                get started you will need the following:
-            </p>
-            <ul>
-                <li>OpenAI API Key, which you can get here: <a
-                        href="https://openai.com/product#made-for-developers">OpenAI Website</a></li>
-            </ul>
+            <!-- Display the file content here if needed -->
+            <!-- You can use {{ file.file.url }} to show a link to download the file -->
 
-
-            <div id="list-group" class="list-group w-auto">
-                <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-                    <img src="https://digital-practice.ams3.cdn.digitaloceanspaces.com/static%2Fapp%2Fimg%2Fopenai-logo.png"
-                        alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-                    <div class="d-flex gap-2 w-100 justify-content-between">
-                        <div>
-                            <p class="mb-0 opacity-75">Hi, my name is Karabo - the helpful assistant, how can i help you
-                                today?</p>
+            <!-- File Upload Form -->
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" id="file-input" name="file">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary" id="upload-button"
+                                    style="background-color: #ad4f09; border-color: #ad4f09;">Upload File</button>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </form>
+                </div>
             </div>
-            <!-- chatbot_template.html -->
 
-<!-- ask_question.html -->
-<!-- ask_question.html -->
-<h2>Ask Questions and Upload/Change a File</h2>
+            <hr>
 
-<h3>Uploaded File: {{ file.file.name }}</h3>
-
-<!-- Display the file content here if needed -->
-<!-- You can use {{ file.file.url }} to show a link to download the file -->
-
-<!-- File Upload Form -->
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-6">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" id="file-input" name="file">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary" id="upload-button">Upload File</button>
-                    </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form id="question-form">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="chat-input"
+                                placeholder="Type your query here..." name="question_text">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary" id="ask-button"
+                                    style="background-color: #ad4f09; border-color: #ad4f09;">Ask</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+
+            <!-- Container to display chatbot responses -->
+            <div class="row justify-content-center mt-4" id="chatbot-response-container" style="text-align: center;">
+                <!-- Chatbot responses will be dynamically added here -->
+            </div>
+
+            {% if questions %}
+            <h3 style="color: #ad4f09;">Existing Questions:</h3>
+            <ul>
+                {% for question in questions %}
+                <li>{{ question.question_text }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         </div>
-    </div>
-</div>
+    </center>
 
-<hr>
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-6">
-            <form id="question-form">
-                {% csrf_token %}
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="chat-input" placeholder="Type your query here..."
-                        name="question_text">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary" id="ask-button">Ask</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+    <!-- Your HTML code here -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
-<!-- Container to display chatbot responses -->
-<div class="container mt-4" id="chatbot-response-container">
-    <!-- Chatbot responses will be dynamically added here -->
-</div>
-<!-- ... -->
+    <style>
+        /* CSS styles for the chatbot responses */
+        #chatbot-response-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
 
-{% if questions %}
-<h3>Existing Questions:</h3>
-<ul>
-    {% for question in questions %}
-    <li>{{ question.question_text }}</li>
-    {% endfor %}
-</ul>
-{% endif %}</main>
-</main>
-<!-- Your HTML code here -->
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        .chat-message {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+        }
 
-<style>
-    /* CSS styles for the chatbot responses */
-    #chatbot-response-container {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        margin-top: 10px;
-        max-height: 300px;
-        overflow-y: auto;
-    }
+        .user-message {
+            background-color: #cce6ff;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 
-    .chat-message {
-        background-color: #f0f0f0;
-        border-radius: 5px;
-        padding: 5px 10px;
-        margin-bottom: 10px;
-    }
+    <script>
+        var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    .user-message {
-        background-color: #cce6ff;
-        border-radius: 5px;
-        padding: 5px 10px;
-        margin-bottom: 10px;
-    }
-</style>
+        // Use jQuery to handle the form submission and display the response
+        $(document).ready(function () {
+            console.log("Document is ready and jQuery is loaded.");
 
-<script>
-    var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            $("#question-form").submit(function (event) {
+                event.preventDefault();
+                var query = $("#chat-input").val();
+                $.ajax({
+                    url: window.location.href,
+                    type: "POST",
+                    data: {
+                        'csrfmiddlewaretoken': csrftoken,
+                        'question_text': query,
+                    },
+                    success: function (data) {
+                        console.log("Chatbot response:", data.response);
 
-    // Use jQuery to handle the form submission and display the response
-    $(document).ready(function () {
-        console.log("Document is ready and jQuery is loaded.");
+                        // Add the asked question as a header in the chatbot response
+                        var chatMessageDiv = $("<div></div>").addClass("chat-message");
+                        var chatMessageHeader = $("<h4></h4>").text("Asked Question: " + query);
+                        var chatMessageText = $("<p></p>").text(data.response);
 
-        $("#question-form").submit(function (event) {
-            event.preventDefault();
-            var query = $("#chat-input").val();
-            $.ajax({
-                url: window.location.href,
-                type: "POST",
-                data: {
-                    'csrfmiddlewaretoken': csrftoken,
-                    'question_text': query,
-                },
-                success: function (data) {
-                    console.log("Chatbot response:", data.response);
+                        chatMessageDiv.append(chatMessageHeader);
+                        chatMessageDiv.append(chatMessageText);
 
-                    // Create a new div for the chat message
-                    var chatMessageDiv = $("<div></div>").addClass("chat-message");
-                    var chatMessageText = $("<p></p>").text(data.response);
+                        // Append the chat message to the container
+                        $("#chatbot-response-container").append(chatMessageDiv);
 
-                    // Append the chat message to the container
-                    chatMessageDiv.append(chatMessageText);
-                    $("#chatbot-response-container").append(chatMessageDiv);
-
-                    // Clear the input field for the next question
-                    $("#chat-input").val('');
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX error:", xhr.responseText);
-                }
+                        // Clear the input field for the next question
+                        $("#chat-input").val('');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX error:", xhr.responseText);
+                    }
+                });
             });
         });
-    });
-</script>
-
-
+    </script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@ from .extracting_data import *
 from .models import UploadedFile, FileQuestion
 from django.contrib.auth.models import User  # Import the User model
 from django.core.cache import cache
-
+from django.contrib.auth.decorators import login_required
 # Function to get or compute document embeddings and data frame
 def get_or_compute_data(file_path):
     document_embeddings = cache.get('document_embeddings')
@@ -29,7 +29,7 @@ def get_or_compute_data(file_path):
 # Global variable to store the document embeddings and data frame
 document_embeddings = None
 df = None
-
+@login_required(login_url='app1:login')
 def chat_view(request):
     global document_embeddings, df
 

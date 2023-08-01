@@ -8,8 +8,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
     path('chat/', include('chatbot.urls', namespace='chatbot')),  # Use a unique namespace for chatbot
-    path("dash/", include('app.urls')),  # Make sure this URL has a unique name or remove it if it's a duplicate
-    path('', include('app1.urls')),
+    path("dash/", include('app.urls', namespace='app_dash')),
+  # Make sure this URL has a unique name or remove it if it's a duplicate
+    path('', include('app1.urls',namespace='app1')),
+    
 ]
 
 # Add the following lines to serve media files during development

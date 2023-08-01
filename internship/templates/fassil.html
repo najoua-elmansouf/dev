@@ -58,9 +58,10 @@
     </style>
 </head>
 <body>
-    <div class="btn">
-        <a href="{% url 'graph' %}" class="btn">consuler le dashboard</a><br><br><br><br><br>
-        <a href="{% url 'graph' %}" class="btn">consuler le chatbot </a>
-    </div>
+
+        <div class="btn">
+            <a href="{% url 'app:graph' %}" class="btn">consulter le dashboard</a><br><br><br><br><br>
+            <a href="{% url 'chatbot_app:chat_view' %}" class="btn">consulter le chatbot</a>
+        </div>
 </body>
 </html>
