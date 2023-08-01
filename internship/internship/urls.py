@@ -1,3 +1,22 @@
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path("", include('app.urls', namespace='app')),  # Use a unique namespace for app
+    path("admin/", admin.site.urls),
+    path('django_plotly_dash/', include('django_plotly_dash.urls')),
+    path('chat/', include('chatbot.urls', namespace='chatbot')),  # Use a unique namespace for chatbot
+    path("dash/", include('app.urls')),  # Make sure this URL has a unique name or remove it if it's a duplicate
+    path('', include('app1.urls')),
+]
+
+# Add the following lines to serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 """internship URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -13,16 +32,5 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
 
-urlpatterns = [
-    path("", include('app.urls')),
-    path("admin/", admin.site.urls),
-    path('django_plotly_dash/', include('django_plotly_dash.urls')),
-    path('chat/', include('chatbot.urls')),
-]
 
-# internship/urls.py
