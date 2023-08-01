@@ -178,6 +178,7 @@ def process_uploaded_datasets(file):
 
 @login_required(login_url='login')
 @csrf_exempt
+@login_required(login_url='login')
 def upload_datasets(request):
     if request.method == 'POST':
         # Handle the uploaded datasets and process them using GPT-3.5 Turbo or other logic
