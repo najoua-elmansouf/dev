@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
   <!-- Design by foolishdeveloper.com -->
-    <title>Login Page</title>
+    <title>Page de connexion</title>
  
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -131,30 +132,42 @@ button{
 .social i{
   margin-right: 4px;
 }
+        .logo-container div{
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 5%;
+            margin-right: 60px;
+        }
 
     </style>
 </head>
 <body>
+    <div class="logo-container" style="margin-left: 1%;">
+        <img src="{% static 'image\logob.png' %}" alt="Logo notre">
+    </div>
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
     <form method="post">
-        <h3>Login Here</h3>
+        <h3>Se connecter ici</h3>
         {% csrf_token %} 
-        <label for="username">Username</label>
+        <label for="username">Nom d'utilisateur</label>
         <input type="text" placeholder="Enter Username" id="username" name="username">
 
-        <label for="password">Password</label>
+        <label for="password">Mot de passe</label>
         <input type="password" placeholder="Password" id="password" name="pass">
 
-        <button type="submit">Log In</button>
+        <button type="submit">Se connecter</button>
         <!-- <input type="button" value=""> -->
         <!-- <div class="social">
           <div class="go"><i class="fab fa-google"></i>  Google</div>
           <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
         </div> -->
-        <a href="{% url 'signup' %}" >Create a account</a>
+        <a href="{% url 'signup' %}" >Créer un compte</a>
     </form>
 </body>
 </html>
