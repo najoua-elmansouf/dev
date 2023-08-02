@@ -6,15 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet" />
+    
     <style>
     body {
             
             color: #fff;
             background-color: #fff;
-            font-family: "Century Gothic";
+            font-family : "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
         .banner{
+            font-family : "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             height: 100vh;
             width: 100%;
             background: url("{% static 'image/overlay.png'%}"),url("{% static 'image/cdgpic.jpg' %}");
@@ -45,7 +46,7 @@
             width: 120px;
             align-items: center;
             justify-content: center;
-            border: 1px solid #ad4f09;
+            border: 1px solid #ffe298;
             overflow: hidden;
             
             position: relative;
@@ -58,7 +59,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:#ad4f09;
+            background:#ffe298;
             border-radius: 50% 50% 0 0;
             transition: all .5s;
             z-index: -1;
@@ -69,9 +70,9 @@
         }
         h1{
             position: absolute;
-            color: #ad4f09;
+            color: #ffe298;
             left: 10%;
-            -webkit-text-stroke: 0.3vw #ad4f09;
+            -webkit-text-stroke: 0.3vw #ffe298;
             font-family: 'Century Gothic';
            
           }
@@ -83,8 +84,8 @@
   width: 0;
   height: 100%;
   color: black;
-  -webkit-text-stroke: 0vw #ad4f09;
-  border-right: 2px solid #ad4f09;
+  -webkit-text-stroke: 0vw #ffe298;
+  border-right: 2px solid #ffe298;
   overflow: hidden;
   animation: animate 6s linear infinite;
 }
@@ -97,11 +98,8 @@
     </style>
 </head>
 <body>
-<<<<<<< HEAD
-=======
     
     
->>>>>>> 58c12e4ad89e9ca0f38ec63181358a1ed7e400c0
     <div class="container-fluid banner">
         <div class="logo-container">
             <img src="{% static 'image\logob.png' %}" alt="Logo notre">
@@ -110,20 +108,15 @@
 		<div class="row">
 			<div class="col-md-12">
 				<nav class="navbar navbar-md">
-<<<<<<< HEAD
-					<div class="navbar-brand"></div>
-					<ul class="nav">
-=======
                     
 					
                     
 					<ul class="nav" style="margin-left: 75%;margin-top: 0%;">
->>>>>>> 58c12e4ad89e9ca0f38ec63181358a1ed7e400c0
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'signup' %}" style="color: grey;">S'inscrire</a>
+							<a class="nav-link" href="{% url 'signup' %}" style="color: grey;font-family : 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">S'inscrire</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'login' %}" style="color: grey;">Se connecter</a>
+							<a class="nav-link" href="{% url 'login' %}" style="color: grey;font-family : 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">Se connecter</a>
 						</li>
 					</ul>
                     <br>
@@ -132,7 +125,7 @@
 			</div>
 			<div class="col-md-8 offset-md-2 info">
                 <br><br><br><br><br><br>
-				<h1 class="text-center" style="color: #ad4f09;"> &nbsp &nbsp &nbsp &nbsp&nbspBienvenue sur ChatDash</h1>
+				<h1 class="text-center" style="letter-spacing: 3px;color: #ffe298;font-family : 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"> &nbsp &nbsp &nbsp &nbsp&nbspBienvenue sur ChatDash</h1>
                 <br><br><br>
 				<p class="text-center">
 					ChatDash est un chatbot intelligent et un générateur de dashboards puissant. Interagissez avec notre chatbot pour obtenir des informations utiles et créer des dashboards personnalisés pour visualiser vos données de manière interactive. Connectez-vous dès maintenant pour découvrir les possibilités de ChatDash !

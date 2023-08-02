@@ -4,10 +4,11 @@
 <head>
   <!-- Design by foolishdeveloper.com -->
     <title>Page de connexion</title>
- 
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    
+    
     <!--Stylesheet-->
     <style media="screen">
       *,
@@ -18,7 +19,8 @@
     box-sizing: border-box;
 }
 body{
-    background-color: #ad4f09;
+    background-color: #ffe298;
+    font-family : "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .background{
     width: 430px;
@@ -67,7 +69,7 @@ form{
 }
 form *{
     font-family: 'Poppins',sans-serif;
-    color: #ffffff;
+    color: #ad4f09;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
@@ -86,10 +88,11 @@ label{
     font-weight: 500;
 }
 input{
+    color : white;
     display: block;
     height: 50px;
     width: 100%;
-    background-color: rgba(255,255,255,0.07);
+    background-color: #ad4f09;
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
@@ -102,8 +105,8 @@ input{
 button{
     margin-top: 50px;
     width: 100%;
-    background-color: #ffffff;
-    color: #080710;
+    background-color: #ad4f09;
+    color: white;
     padding: 15px 0;
     font-size: 18px;
     font-weight: 600;
@@ -156,10 +159,10 @@ button{
         <h3>Se connecter ici</h3>
         {% csrf_token %} 
         <label for="username">Nom d'utilisateur</label>
-        <input type="text" placeholder="Enter Username" id="username" name="username">
+        <input type="text" placeholder="Nom d'utilisateur" id="username" name="username">
 
         <label for="password">Mot de passe</label>
-        <input type="password" placeholder="Password" id="password" name="pass">
+        <input type="password" placeholder="Mot de passe" id="password" name="pass">
 
         <button type="submit">Se connecter</button>
         <!-- <input type="button" value=""> -->
