@@ -1,0 +1,2 @@
+{"role": "assistant", "content": "3. A line chart with 'xAxis' representing time periods and replace the placeholder of its label with the name of the column used ,and 'yAxis' representing values and replace the placeholder of its label with the name of the column used."},
+{"role": "user", "content": "4. A scatter plot with 'xAxis' representing one variable and replace the placeholder of its label with the name of the column used ,and 'yAxis' representing another column different from the 'xAxis' and replace the placeholder of its label with the name of the column used."},

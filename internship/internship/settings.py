@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'channels',
     'channels_redis',
     'chatbot',
+    'app1',
 ]
 
 MIDDLEWARE = [

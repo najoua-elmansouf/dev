@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}"  rel="stylesheet" type="text/css">
+    
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <script src ="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Page de redirection</title>
+    <style>
+        *{
+            
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            background-color: #fff;
+        }
+        .btn div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: "Century Gothic";
+
+        }
+        a{
+            font-family: "Century Gothic";
+            color: #ad4f09;
+            font-family: 'Century Gothic';
+            background: #fff;
+            height: 60px;
+            width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ad4f09;
+            overflow: hidden;
+            font-size: 1.3em;
+            font-weight: 700;
+            position: relative;
+            z-index: 0;
+        }
+        a::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:#ffe298;
+            border-radius: 50% 50% 0 0;
+            transition: all .5s;
+            z-index: -1;
+        }
+        a:hover::before{
+            top: 0;
+            border-radius: 0;
+        }
+        a:hover::after{
+            color: #fff;
+
+        }
+        .logo-container div{
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 5%;
+            margin-right: 60px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="logo-container" style="margin-left: 1%;">
+        <img src="{% static 'image\logob.png' %}" alt="Logo notre">
+    </div>
+    <br><br><br><br><br>
+    <div class="btn" style="margin-left: 35%;">
+        <a href="{% url 'graph' %}" class="btn" style="font-family: 'Century Gothic';color: #ad4f09;font-size: 1.5em;font-weight: bold;border: 2px solid #ffe298;">Consulter le Dashboard</a><br><br><br><br><br>
+        <a href="{% url 'graph' %}" class="btn" style="color: #ad4f09;font-size: 1.5em;font-weight: bold;border: 2px solid #ffe298;">Consulter le Chatbot </a>
+    </div>
+</body>
+<br><br><br><br><br><br><br><br><br>
+{% include 'partials/_footer.html' %}
+</html>
