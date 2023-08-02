@@ -137,6 +137,11 @@ def process_uploaded_datasets(file):
         # Assuming you are using an Excel file, specify the engine as 'openpyxl'
         df = pd.read_excel(file, engine='openpyxl')
         sample_dataset = df.to_string(index=False)  # Convert DataFrame to string directly
+<<<<<<< HEAD
+        response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
+        response_dict = response['choices'][0]['message']['content']
+        processed_outputs.append(response_dict)
+=======
         tokens = num_tokens_from_string(sample_dataset)
         if tokens > 14000 :
             chunks = chunk_dataframe(df,MAX_TOKEN)
@@ -169,6 +174,7 @@ def process_uploaded_datasets(file):
             response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
             response_dict = response['choices'][0]['message']['content']
             processed_outputs.append(response_dict)
+>>>>>>> 591e9e862d344e847fab6e9b6160bb19efcb097c
     except Exception as e:
         # Handle any errors that may occur during the process
         print(f"Error processing uploaded dataset: {str(e)}")

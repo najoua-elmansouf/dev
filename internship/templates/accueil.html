@@ -4,23 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>welcome</title>
+    <title>Page d'accueil</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet" />
     <style>
     body {
-           /* background-image: url("{% static 'img/cdgpic.jpg' %}");
-             Autres propriétés de style pour la page */
-            background-color: #cfd9d3;
+            
+            color: #fff;
+            background-color: #fff;
             font-family: "Century Gothic";
         }
+        .banner{
+            height: 100vh;
+            width: 100%;
+            background: url("{% static 'image/overlay.png'%}"),url("{% static 'image/cdgpic.jpg' %}");
+            background-position: top;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 5%;
+            margin-right: 60px;
+        }
+        .navbar {
+            justify-content: space-between;
+        }
+
         a{
             color: black;
+            font-size: 13px;
             font-weight: bold;
             font-family: 'Century Gothic';
             background: #fff;
             height: 40px;
-            width: 100px;
+            width: 120px;
             align-items: center;
             justify-content: center;
             border: 1px solid #ad4f09;
@@ -45,27 +67,73 @@
             top: 0;
             border-radius: 0;
         }
+        h1{
+            position: absolute;
+            color: #ad4f09;
+            left: 10%;
+            -webkit-text-stroke: 0.3vw #ad4f09;
+            font-family: 'Century Gothic';
+           
+          }
+        h1::before{
+            content: attr(data-text);
+            position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  color: black;
+  -webkit-text-stroke: 0vw #ad4f09;
+  border-right: 2px solid #ad4f09;
+  overflow: hidden;
+  animation: animate 6s linear infinite;
+}
+@keyframes animate{
+  0%{
+    width: 0;
+  }
+  70%{width: 100%;}
+}
     </style>
 </head>
 <body>
+<<<<<<< HEAD
+=======
+    
+    
+>>>>>>> 58c12e4ad89e9ca0f38ec63181358a1ed7e400c0
     <div class="container-fluid banner">
+        <div class="logo-container">
+            <img src="{% static 'image\logob.png' %}" alt="Logo notre">
+        </div>
+        
 		<div class="row">
 			<div class="col-md-12">
 				<nav class="navbar navbar-md">
+<<<<<<< HEAD
 					<div class="navbar-brand"></div>
 					<ul class="nav">
+=======
+                    
+					
+                    
+					<ul class="nav" style="margin-left: 75%;margin-top: 0%;">
+>>>>>>> 58c12e4ad89e9ca0f38ec63181358a1ed7e400c0
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'signup' %}" style="color: grey;">SIGNUP</a>
+							<a class="nav-link" href="{% url 'signup' %}" style="color: grey;">S'inscrire</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{% url 'login' %}" style="color: grey;">LOGIN</a>
+							<a class="nav-link" href="{% url 'login' %}" style="color: grey;">Se connecter</a>
 						</li>
 					</ul>
+                    <br>
+                    
 				</nav>
 			</div>
 			<div class="col-md-8 offset-md-2 info">
-                <br><br><br><br><br><br><br><br><br>
-				<h1 class="text-center" style="color: #ad4f09;">Bienvenue sur ChatDash</h1>
+                <br><br><br><br><br><br>
+				<h1 class="text-center" style="color: #ad4f09;"> &nbsp &nbsp &nbsp &nbsp&nbspBienvenue sur ChatDash</h1>
+                <br><br><br>
 				<p class="text-center">
 					ChatDash est un chatbot intelligent et un générateur de dashboards puissant. Interagissez avec notre chatbot pour obtenir des informations utiles et créer des dashboards personnalisés pour visualiser vos données de manière interactive. Connectez-vous dès maintenant pour découvrir les possibilités de ChatDash !
 				</p>
@@ -73,4 +141,5 @@
 		</div>
 	</div>
 </body>
+
 </html>

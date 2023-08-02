@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
   <!-- Design by foolishdeveloper.com -->
-    <title>Signup Page</title>
+    <title>Page d'inscription</title>
  
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -19,6 +20,15 @@
 body{
     background-color: #ad4f09;
 }
+.logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 5%;
+            margin-right: 60px;
+        }
 .background{
     width: 430px;
     height: 520px;
@@ -135,29 +145,32 @@ button{
     </style>
 </head>
 <body>
+    <div class="logo-container" style="margin-left: 1%;">
+        <img src="{% static 'image\logob.png' %}" alt="Logo notre">
+    </div>
     <div class="background">
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
     <form action="" method="post">
         {% csrf_token %} 
-        <h3>Signup Here</h3>
+        <h3>Inscrivez-vous ici</h3>
 
-        <label for="username">Username</label>
+        <label for="username">Nom d'utilisateur</label>
         <input type="text" placeholder="Username" name="username" id="username">
 
         <label for="email">Email</label>
         <input type="email" placeholder="Email or Phone" name="email" id="email">
 
-        <label for="password1">Password</label>
+        <label for="password1">Mot de passe</label>
         <input type="password" placeholder="Password" id="password1" name="password1">
 
 
-        <label for="password2">Confrom Password</label>
+        <label for="password2">Confirmez le mot de passe</label>
         <input type="password" placeholder="Confrom Password" id="password2" name="password2">
-        <button type="submit">Signup</button>
+        <button type="submit">S'inscrire</button>
         
-        <a href="{% url 'login' %}" >i have already account</a>
+        <a href="{% url 'login' %}" >J'ai déjà un compte</a>
     </form>
 </body>
 </html>
