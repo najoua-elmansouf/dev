@@ -84,10 +84,10 @@
     </div>
     <br><br><br><br><br>
     <div class="btn" style="margin-left: 35%;">
-        <a href="{% url 'graph' %}" class="btn" style="font-family: 'Century Gothic';color: #ad4f09;font-size: 1.5em;font-weight: bold;border: 2px solid #ffe298;">Consulter le Dashboard</a><br><br><br><br><br>
-        <a href="{% url 'graph' %}" class="btn" style="color: #ad4f09;font-size: 1.5em;font-weight: bold;border: 2px solid #ffe298;">Consulter le Chatbot </a>
+        <a href="{% url 'app:graph' %}" class="btn" style="font-family: 'Century Gothic';color: #ad4f09;font-size: 1.5em;font-weight: bold;border: 2px solid #ffe298;">Consulter le Dashboard</a><br><br><br><br><br>
+        <a href="{% url 'chatbot_app:chat_view' %}" class="btn" style="color: #ad4f09;font-size: 1.5em;font-weight: bold;border: 2px solid #ffe298;">Consulter le Chatbot </a>
     </div>
 </body>
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
 {% include 'partials/_footer.html' %}
 </html>

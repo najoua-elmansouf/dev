@@ -11,7 +11,9 @@ COMPLETIONS_MODEL = "gpt-3.5-turbo"
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
 # Read the OpenAI API key from an environment variable
+
 openai.api_key = ''
+
 encoding = tiktoken.get_encoding(ENCODING)
 separator_len = len(encoding.encode(SEPARATOR))
 

@@ -173,3 +173,4 @@ def update_charts(contents, filenames):
 if __name__ == '__main__':
     print("Starting the server...")
     app.run_server(debug=True)
+

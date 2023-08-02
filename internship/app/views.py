@@ -4,7 +4,7 @@ import pandas as pd
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import tiktoken
-import pandas as pd
+from django.shortcuts import render, redirect
 import os
 import tkinter as tk
 from tkinter import filedialog
@@ -133,16 +133,22 @@ def gpt_processing(model,key,sample_dataset):
 
 def process_uploaded_datasets(file):
     processed_outputs = []
+    df = pd.read_excel(file)
+    sample_dataset = df.to_csv(index=False)
+    response = gpt_processing('gpt-3.5-turbo-16k', '', sample_dataset)
+    response_dict = json.loads(response['choices'][0]['message']['content'])
+    processed_outputs.append(response_dict)  
     try:
         # Assuming you are using an Excel file, specify the engine as 'openpyxl'
         df = pd.read_excel(file, engine='openpyxl')
         sample_dataset = df.to_string(index=False)  # Convert DataFrame to string directly
-        response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
+        response = gpt_processing('gpt-3.5-turbo-16k', '', sample_dataset)
         response_dict = response['choices'][0]['message']['content']
         processed_outputs.append(response_dict)
     except Exception as e:
         # Handle any errors that may occur during the process
         print(f"Error processing uploaded dataset: {str(e)}")
+
     return processed_outputs
 
 @csrf_exempt
