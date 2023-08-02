@@ -36,7 +36,7 @@ app.layout = html.Div([
     ),
 
     html.Div(id='charts-container'),
-    html.Div(id='dummy-input', children='dummy')
+    html.Div(id='dummy-input', children='')
 ])
 
 # Your Django view URL
@@ -76,31 +76,38 @@ def generate_chart(chart_data):
             y_axis = chart['yAxis']
 
         if chart_type == 'bar':
+            categories = [value for value in x_axis['categories'] if value is not None]
             plot = dcc.Graph(
                 figure={
-                    'data': [go.Bar(x=x_axis['categories'], y=y_axis['values'])],
+                    'data': [go.Bar(x=categories, y=y_axis['values'])],
                     'layout': go.Layout(title=f"{x_axis['label']} vs {y_axis['label']}")
                 }
             )
         elif chart_type == 'line':
             plot = dcc.Graph(
                 figure={
-                    'data': [go.Scatter(x=x_axis['categories'], y=y_axis['values'], mode='lines')],
-                    'layout': go.Layout(title=f"{x_axis['label']} vs {y_axis['label']}")
+                    'data': [go.Scatter(x=chart['xAxis']['categories'], y=chart['yAxis']['values'], mode='lines')],
+                    'layout': go.Layout(title=f"{chart['xAxis']['label']} vs {chart['yAxis']['label']}")
                 }
             )
+        
         elif chart_type == 'pie':
+            if isinstance(chart['values'], dict):
+                print('ok')
+            else:
+    # Handle the case when chart['values'] is not a list of dictionaries
+                print("empty")
             plot = dcc.Graph(
                 figure={
-                    'data': [go.Pie(labels=chart['labels'], values=chart['values'])],
-                    'layout': go.Layout(title=f"{x_axis['label']} Distribution")
+                    'data': [go.Pie(labels=chart['values']['labels'], values=chart['values']['percentage'])],
+                    'layout': go.Layout(title=f"{chart['label']} Distribution")
                 }
             )
         elif chart_type == 'scatter':
             plot = dcc.Graph(
                 figure={
-                    'data': [go.Scatter(x=x_axis['values'], y=y_axis['values'], mode='markers')],
-                    'layout': go.Layout(title=f"{x_axis['label']} vs {y_axis['label']}")
+                    'data': [go.Scatter(x=chart['xAxis']['values'], y=chart['yAxis']['values'], mode='markers')],
+                    'layout': go.Layout(title=f"{chart['xAxis']['label']} vs {chart['yAxis']['label']}")
                 }
             )
         else:
@@ -143,14 +150,19 @@ def update_charts(contents, filenames):
             
             # Fetch the processed JSON data from the Django view
             data = fetch_json_data(url, files)
+            print(data)
 
             try:
+                print('me')
                 data_dict = json.loads(data)  # Convert the JSON string to a dictionary
+                print(data_dict)
             except json.JSONDecodeError:
-                return html.Div("Error: Failed to parse JSON data")
+                return html.Div("Veuillez rafraichire la page et réinserer votre table")
+            
 
             if data_dict:
                 # Generate charts using the fetched JSON data
+                print(data_dict)
                 return generate_chart(data_dict)
             else:
                 return html.Div("Error: Failed to fetch JSON data")
