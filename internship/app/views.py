@@ -137,44 +137,9 @@ def process_uploaded_datasets(file):
         # Assuming you are using an Excel file, specify the engine as 'openpyxl'
         df = pd.read_excel(file, engine='openpyxl')
         sample_dataset = df.to_string(index=False)  # Convert DataFrame to string directly
-<<<<<<< HEAD
         response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
         response_dict = response['choices'][0]['message']['content']
         processed_outputs.append(response_dict)
-=======
-        tokens = num_tokens_from_string(sample_dataset)
-        if tokens > 14000 :
-            chunks = chunk_dataframe(df,MAX_TOKEN)
-            root = tk.Tk()
-            root.withdraw()
-            # Prompt the user to select the output folder using a pop-up window
-            output_folder = filedialog.askdirectory(title="Select the folder where you want to save the Excel files")
-            if not os.path.exists(output_folder):
-                os.makedirs(output_folder)
-            for i, chunk in enumerate(chunks, start=1):
-                file_name = filedialog.asksaveasfilename(
-            initialdir=output_folder,
-            initialfile=f"chunk_{i}.xlsx",
-            title=f"Save Chunk {i} as Excel",
-            defaultextension=".xlsx",
-            filetypes=[("Excel Files", "*.xlsx"), ("All Files", "*.*")]
-        )
-                if not file_name:
-                    print(f"User canceled saving Chunk {i}.")
-                    continue
-                try:
-                    with pd.ExcelWriter(file_name) as writer:
-                        chunk.to_excel(writer, index=False, sheet_name='Sheet1')
-                    print(f"Chunk {i} saved as Excel.")
-                except Exception as e:
-                    print(f"Error saving Chunk {i} as Excel: {e}")
-
-            
-        else :   
-            response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
-            response_dict = response['choices'][0]['message']['content']
-            processed_outputs.append(response_dict)
->>>>>>> 591e9e862d344e847fab6e9b6160bb19efcb097c
     except Exception as e:
         # Handle any errors that may occur during the process
         print(f"Error processing uploaded dataset: {str(e)}")
