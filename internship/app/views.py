@@ -14,11 +14,10 @@ ENCODING = tiktoken.encoding_for_model("gpt-3.5-turbo")
 MAX_TOKEN = 14000
 
 # Create your views here.
-@login_required(login_url='http://127.0.0.1:8000/login/')
+@login_required(login_url='login')
 def myview(request):
     return render(request, "app/graph.html")
 
-@login_required(login_url='login')
 def chunk_dataframe(df, max_token_limit):
     current_chunk = pd.DataFrame()
     current_token_count = 0
@@ -48,14 +47,13 @@ def chunk_dataframe(df, max_token_limit):
 
     return chunks
 
-@login_required(login_url='login')
+
 def num_tokens_from_string(string: str) -> int:
     """Returns the number of tokens in a text string."""
     encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
     num_tokens = len(encoding.encode(string))
     return num_tokens
 
-@login_required(login_url='login')
 def gpt_processing(model,key,sample_dataset): 
     """process data of files by gpt"""
     # key for each user
@@ -113,11 +111,13 @@ def gpt_processing(model,key,sample_dataset):
     conversation = [
     {"role": "system", "content": "You are an AI assistant that generates json data to utilize to plot charts, you need to analyse the dataset's columns to see wich plots are the most convenient based on the table ."},
     {"role": "user", "content": f"Given the following dataset:\n{sample_dataset}\nPlease generate json data for the following charts:"},
-    {"role": "assistant", "content": "1. A bar chart with the 'xAxis' representing categories and replace the placeholder of its label with the name of the column used ,'yAxis' representing values and replace the placeholder of its label with the name of the column used."},
-    {"role": "user", "content": "2. A pie chart with 'labels' representing categories and replace the placeholder of the label with the name of the column used ,and 'percentage' representing the corresponding percentages of labels."},
-    {"role": "assistant", "content": "3. A line chart with 'xAxis' representing continuous data or time periods and replace the placeholder of its label with the name of the column used ,and 'yAxis' representing either continuous or discrete data and replace the placeholder of its label with the name of the column used, if you don t find the right columns for this plot don t add it in the json data ."},
-    {"role": "user", "content": "4. A scatter plot with 'xAxis' representing one variable and replace the placeholder of its label with the name of the column used ,and 'yAxis' representing another column different from the 'xAxis' and replace the placeholder of its label with the name of the column used."},
-    {"role": "assistant", "content": f"Generate JSON response charts in this format using this template \n{conversation_template}\n and replacing the placeholders with the corresponding values from the dataset please "}
+    {"role": "user", "content": "1. A bar chart with the 'xAxis' representing categories and replace the placeholder of its label with the name of the column used ,'yAxis' representing values and replace the placeholder of its label with the name of the column used."},
+    {"role": "assistant", "content": "2. A pie chart with 'labels' representing categories and replace the placeholder of the label with the name of the column used ,and 'percentage' representing the corresponding percentages of labels."},
+    {"role": "user", "content": "3. A line chart with 'xAxis' representing continuous data or time periods and replace the placeholder of its label with the name of the column used ,and 'yAxis' representing either continuous or discrete data and replace the placeholder of its label with the name of the column used."},
+    {"role": "assistant", "content": "4. A scatter plot with 'xAxis' representing one variable and replace the placeholder of its label with the name of the column used ,do the same for the yAxis"},
+    {"role": "user", "content": f"Generate JSON response charts in this format using this template \n{conversation_template}\n and replacing the placeholders with the corresponding values from the dataset please "},
+
+    
     
 ]
 
@@ -127,11 +127,10 @@ def gpt_processing(model,key,sample_dataset):
     max_tokens=4096,
     n=1,
     stop=None,
-    temperature = 0.2
+    temperature = 0.5
     )
     return response 
 
-@login_required(login_url='login')
 def process_uploaded_datasets(file):
     processed_outputs = []
     try:
@@ -167,7 +166,7 @@ def process_uploaded_datasets(file):
 
             
         else :   
-            response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
+            response = gpt_processing('gpt-3.5-turbo-16k', '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', sample_dataset)
             response_dict = response['choices'][0]['message']['content']
             processed_outputs.append(response_dict)
     except Exception as e:
@@ -175,10 +174,7 @@ def process_uploaded_datasets(file):
         print(f"Error processing uploaded dataset: {str(e)}")
     return processed_outputs
 
-
-@login_required(login_url='login')
 @csrf_exempt
-@login_required(login_url='login')
 def upload_datasets(request):
     if request.method == 'POST':
         # Handle the uploaded datasets and process them using GPT-3.5 Turbo or other logic

@@ -16,11 +16,10 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = DjangoDash('graphs', external_stylesheets=external_stylesheets)
 
 app.layout = html.Div([
-    html.H1('Charts'),
     
     dcc.Upload(
         id='upload-data',  # This ID will be used in the callback to retrieve the uploaded file
-        children=html.Div(['Drag and Drop or ', html.A('Select Files')]),
+        children=html.Div(['Glisser-Déposer ou ', html.A('Choisir un fichier')]),
         style={
             'width': '100%',
             'height': '60px',
@@ -138,16 +137,14 @@ def update_charts(contents, filenames):
         
         try:
             # Save the file temporarily on the server-side
-            temp_dir = '/path/to/temp/'  # Update this with the desired temporary directory
+            temp_dir = 'path/to/temp/'   #Update this with the desired temporary directory
             os.makedirs(temp_dir, exist_ok=True)  # Create the temporary directory if it doesn't exist
-
             temp_filepath = os.path.join(temp_dir, filename)  # Full path to the temporary file
             with open(temp_filepath, 'wb') as f:
                 f.write(decoded)
 
             # The file is directly received as a parameter in the callback function
             files = {'dataset_files': open(temp_filepath, 'rb')}
-            
             # Fetch the processed JSON data from the Django view
             data = fetch_json_data(url, files)
             print(data)
@@ -157,7 +154,7 @@ def update_charts(contents, filenames):
                 data_dict = json.loads(data)  # Convert the JSON string to a dictionary
                 print(data_dict)
             except json.JSONDecodeError:
-                return html.Div("Veuillez rafraichire la page et réinserer votre table")
+                return html.Div("Table contient des données éronnées, veuillez réctifier votre table.")
             
 
             if data_dict:
