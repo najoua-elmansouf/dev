@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+        body{
+            background-color: #ffe298;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+
+        }
+        a{
+            color: #fff;
+            font-family: 'Century Gothic';
+            background: black;
+            height: 60px;
+            width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ad4f09;
+            overflow: hidden;
+            font-size: 1.3em;
+            font-weight: 700;
+            position: relative;
+            z-index: 0;
+        }
+        a::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:#ad4f09;
+            border-radius: 50% 50% 0 0;
+            transition: all .5s;
+            z-index: -1;
+        }
+        a:hover::before{
+            top: 0;
+            border-radius: 0;
+        }
+        a:hover{
+
+        }
+
+    </style>
+</head>
+<body>
+
+        <div class="btn">
+            <a href="{% url 'app:graph' %}" class="btn">consulter le dashboard</a><br><br><br><br><br>
+            <a href="{% url 'chatbot_app:chat_view' %}" class="btn">consulter le chatbot</a>
+        </div>
+</body>
+</html>
