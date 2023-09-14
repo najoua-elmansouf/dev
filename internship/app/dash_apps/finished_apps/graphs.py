@@ -39,7 +39,7 @@ app.layout = html.Div([
 ])
 
 # Your Django view URL
-url = 'http://localhost:8000/dash/upload_datasets/'
+url = 'http://127.0.0.1:8000/dash/upload_datasets/'
 
 def fetch_json_data(url, files):
     # Make the POST request with the files
@@ -142,25 +142,25 @@ def update_charts(contents, filenames):
             temp_filepath = os.path.join(temp_dir, filename)  # Full path to the temporary file
             with open(temp_filepath, 'wb') as f:
                 f.write(decoded)
-
             # The file is directly received as a parameter in the callback function
             files = {'dataset_files': open(temp_filepath, 'rb')}
             # Fetch the processed JSON data from the Django view
+            print('salam')
             data = fetch_json_data(url, files)
+            print('salam')
             print(data)
 
             try:
                 print('me')
-                data_dict = json.loads(data)  # Convert the JSON string to a dictionary
-                print(data_dict)
+                
             except json.JSONDecodeError:
                 return html.Div("Table contient des données éronnées, veuillez réctifier votre table.")
             
 
-            if data_dict:
+            if data:
                 # Generate charts using the fetched JSON data
-                print(data_dict)
-                return generate_chart(data_dict)
+                print(data)
+                return generate_chart(data)
             else:
                 return html.Div("Error: Failed to fetch JSON data")
 

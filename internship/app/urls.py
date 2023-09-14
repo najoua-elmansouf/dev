@@ -8,9 +8,6 @@ urlpatterns = [
      # Remove the duplicate URL pattern 'upload_datasets/'
     path('upload_datasets/', views.upload_datasets, name='upload_datasets'),
     
-    # Remove the following line, as it includes 'chatbot.urls' with the same path
-    # path('upload_datasets/', views.upload_datasets, name='upload_datasets')
-    
     # Include the URL patterns for the 'chatbot' app
     path('upload_datasets/', include('chatbot.urls')), 
     
