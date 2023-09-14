@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-$91!a#8x-e$9=ubexh(6#%_w6h%2mhl1brs3ndcfyks^m&0fq2"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 # Application definition
@@ -83,17 +83,16 @@ WSGI_APPLICATION = "internship.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': '2uZarNPHSdWRVs2XMC2l',
-        'HOST': 'containers-us-west-110.railway.app',
-        'PORT': '7319',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "GHITAHATIMI",
+        "HOST": "localhost",
     }
 }
-
 
 """
 DATABASES = {
