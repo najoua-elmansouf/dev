@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    
+    <style>
+    body {
+            
+            color: #fff;
+            background-color: #fff;
+            font-family : "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+        .banner{
+            font-family : "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            height: 100vh;
+            width: 100%;
+            background: url("{% static 'image/overlay.png'%}"),url("{% static 'image/cdgpic.jpg' %}");
+            background-position: top;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 5%;
+            margin-right: 60px;
+        }
+        .navbar {
+            justify-content: space-between;
+        }
+
+        a{
+            color: black;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: 'Century Gothic';
+            background: #fff;
+            height: 40px;
+            width: 120px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffe298;
+            overflow: hidden;
+            
+            position: relative;
+            z-index: 0;
+        }
+        a::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:#ffe298;
+            border-radius: 50% 50% 0 0;
+            transition: all .5s;
+            z-index: -1;
+        }
+        a:hover::before{
+            top: 0;
+            border-radius: 0;
+        }
+        h1{
+            position: absolute;
+            color: #ffe298;
+            left: 10%;
+            -webkit-text-stroke: 0.3vw #ffe298;
+            font-family: 'Century Gothic';
+           
+          }
+        h1::before{
+            content: attr(data-text);
+            position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  color: black;
+  -webkit-text-stroke: 0vw #ffe298;
+  border-right: 2px solid #ffe298;
+  overflow: hidden;
+  animation: animate 6s linear infinite;
+}
+@keyframes animate{
+  0%{
+    width: 0;
+  }
+  70%{width: 100%;}
+}
+    </style>
+</head>
+<body>
+    
+    
+    <div class="container-fluid banner">
+        <div class="logo-container">
+            <img src="{% static 'image\logob.png' %}" alt="Logo notre">
+        </div>
+        
+		<div class="row">
+			<div class="col-md-12">
+				<nav class="navbar navbar-md">
+                    
+					
+                    
+					<ul class="nav" style="margin-left: 75%;margin-top: 0%;">
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'app1:signup' %}" style="color: grey;font-family : 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">S'inscrire</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'app1:login' %}" style="color: grey;font-family : 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'">Se connecter</a>
+						</li>
+					</ul>
+                    <br>
+                    
+				</nav>
+			</div>
+			<div class="col-md-8 offset-md-2 info">
+                <br><br><br><br><br><br>
+				<h1 class="text-center" style="letter-spacing: 3px;color: #ffe298;font-family : 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"> &nbsp &nbsp &nbsp &nbsp&nbspBienvenue sur ChatDash</h1>
+                <br><br><br>
+				<p class="text-center">
+					ChatDash est un chatbot intelligent et un générateur de dashboards puissant. Interagissez avec notre chatbot pour obtenir des informations utiles et créer des dashboards personnalisés pour visualiser vos données de manière interactive. Connectez-vous dès maintenant pour découvrir les possibilités de ChatDash !
+				</p>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

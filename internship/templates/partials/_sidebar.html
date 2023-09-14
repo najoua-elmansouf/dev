@@ -1,0 +1,108 @@
+{% load static %}
+<script>const csrfToken = "{{ csrf_token }}";</script>
+<style>
+    #accordionSidebar{
+        background-color: #ffe298;
+    }
+</style>
+<ul class="navbar-nav  sidebar sidebar-dark accordion" id="accordionSidebar" >
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#" >
+        <div class="sidebar-brand-icon " >
+            <div style ="width:35%; margin-left:1%;margin-top:15%;">
+                <img src="{%static 'image/logob.png' %}" alt ="logo" style ="width:100%">
+                </div>
+        </div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0" >
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active" >
+        
+        <a class="nav-link" href="#" style="margin-top:30%;">
+            <i class="fas fa-fw fa-tachometer-alt" ></i>
+            <span style="color: #ad4f09;">Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider" >
+    
+
+    <!-- Heading -->
+    
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    
+    <!-- Nav Item - Tables -->
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block" >
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline" >
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+    <!-- Sidebar Message -->
+    
+
+</ul>
+<script >console.log('ola')
+    // Add an event listener to handle the file upload
+document.getElementById('upload-dataset').addEventListener('change', function (event) {
+    const files = event.target.files;
+    const maxFilesAllowed = parseInt(event.target.getAttribute('data-max-files'));
+
+    if (files.length > maxFilesAllowed) {
+        alert('You can upload a maximum of ${maxFilesAllowed} datasets.');
+        // Clear the selected files to prevent uploading more than the limit
+        this.value = null;
+        return;
+    }
+
+    // Create a FormData object to send the selected files to the DjangoDash app
+    const formData = new FormData();
+    for (const file of files) {
+        formData.append('dataset_files', file);  // Make sure the 'dataset_files' matches the field name on the server-side
+    }
+
+    // Make an AJAX request to the DjangoDash app
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/update_graph_data/'); // This URL is used to send data to the Dash app.
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Request successful, do something with the response if needed
+            console.log(xhr.responseText);
+        } else {
+            // Request failed, handle the error
+            console.error('Error uploading datasets:', xhr.status, xhr.statusText);
+        }
+    };
+    xhr.onerror = function () {
+        // Error handling for network errors
+        console.error('Network error occurred while uploading datasets');
+    };
+
+    // Send the FormData with the selected files to the DjangoDash app
+    xhr.send(formData);
+});
+
+
+</script>
